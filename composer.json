@@ -1,6 +1,7 @@
 {
     "name": "zfegg/admin-admin",
     "description": "基础后台管理员模块",
+    "license": "MIT",
     "authors": [
         {
             "name": "Moln",
