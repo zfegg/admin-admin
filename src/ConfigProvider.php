@@ -118,21 +118,6 @@ class ConfigProvider
                     ]
                 ]
             ],
-            RouteMetadata::class => [
-                'paths' => [
-                    __DIR__ . '/Controller'
-                ],
-                'groups' => [
-                    'api.base' => [
-                        'prefix' => '/api',
-                        'middlewares' => [
-                            SessionMiddleware::class,
-                            AuthenticationMiddleware::class,
-                        ],
-                        'name' => 'api.admin.'
-                    ]
-                ]
-            ],
         ];
     }
 
@@ -160,6 +145,27 @@ class ConfigProvider
                 Authorization\GateInterface::class => Authorization\Gate::class,
                 AuthenticationInterface::class => Authentication::class,
             ],
+            'auto' => [
+                'types' => [
+                    RouteMetadata::class => [
+                        'parameters' => [
+                            'paths' => [
+                                __DIR__ . '/Controller'
+                            ],
+                            'groups' => [
+                                'api.base' => [
+                                    'prefix' => '/api',
+                                    'middlewares' => [
+                                        SessionMiddleware::class,
+                                        AuthenticationMiddleware::class,
+                                    ],
+                                    'name' => 'api.admin.'
+                                ]
+                            ]
+                        ],
+                    ],
+                ]
+            ],
         ];
     }
 
@@ -174,11 +180,6 @@ class ConfigProvider
                 ],
             ],
             'driver' => [
-                'annotation' => [
-                    'paths' => [
-                        __DIR__ . '/Entity',
-                    ],
-                ],
                 'attribute' => [
                     'paths' => [
                         __DIR__ . '/Entity',

@@ -21,11 +21,11 @@
     "require": {
         "php": ">=8.0",
         "ext-json": "*",
-        "laminas/laminas-diactoros": "^2.3.0",
-        "roave/psr-container-doctrine": "^3.5",
+        "laminas/laminas-diactoros": "^3.0",
+        "roave/psr-container-doctrine": "^4.0",
         "zfegg/attachment-handler": "^0.1.1",
         "zfegg/api-resource-doctrine": "^0.5.4",
-        "zfegg/content-validation": "^5.1.1"
+        "zfegg/content-validation": "^5.4.0"
     },
     "extra": {
         "laminas": {
