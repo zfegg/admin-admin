@@ -24,7 +24,7 @@
         "laminas/laminas-diactoros": "^3.0",
         "roave/psr-container-doctrine": "^4.0",
         "zfegg/attachment-handler": "^0.1.1",
-        "zfegg/api-resource-doctrine": "^0.5.4",
+        "zfegg/api-resource-doctrine": "^0.6.0",
         "zfegg/content-validation": "^5.4.0"
     },
     "extra": {
