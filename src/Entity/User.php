@@ -2,10 +2,12 @@
 
 namespace Zfegg\Admin\Admin\Entity;
 
+use Closure;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Laminas\Stdlib\ArrayUtils;
 use Zfegg\Admin\Admin\Repository\Users;
 
 /**
@@ -118,11 +120,41 @@ class User implements UserInterface
     #[ORM\InverseJoinColumn('role_id', referencedColumnName: "id")]
     private Collection $roles;
 
+    private static array $defaultContext = [
+        'attributes' => [
+            'realName',
+            'email',
+            'avatar',
+            'admin',
+            'mapConfig',
+            'bindings' => ['provider', 'info', 'createdAt']
+        ]
+    ];
+
+    private static ?Closure $configMapper = null;
+
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->bindings = new ArrayCollection();
         $this->roles = new ArrayCollection();
+    }
+
+
+    public static function setDefaultContext(array $defaultContext): void
+    {
+        self::$defaultContext = $defaultContext;
+    }
+
+    public static function getDefaultContext(): array
+    {
+        return self::$defaultContext;
+    }
+
+    public static function setConfigMapper(?Closure $configMapper): void
+    {
+        self::$configMapper = $configMapper;
     }
 
     /**
@@ -324,5 +356,24 @@ class User implements UserInterface
     public function setConfig(?array $config): void
     {
         $this->config = $config;
+    }
+
+    public function getMapConfig(): array
+    {
+        if (! self::$configMapper) {
+            return $this->config;
+        }
+
+        return (self::$configMapper)($this->config, $this);
+    }
+
+    public function mergeConfig(array $config): void
+    {
+        $this->config = ArrayUtils::merge($this->config ?: [], $config);
+    }
+
+    public function unsetConfig(string $key): void
+    {
+        unset($this->config[$key]);
     }
 }

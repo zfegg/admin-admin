@@ -29,7 +29,7 @@ use Zfegg\PsrMvc\Attribute\Route;
         AuthenticationMiddleware::class,
         ContentValidationMiddleware::class,
     ],
-    'api.[action]'
+    'api.user.[action]'
 )]
 class UserController
 {
@@ -49,6 +49,7 @@ class UserController
         $this->responseFactory = $responseFactory;
         $this->gate = $gate;
     }
+
 
     #[HttpGet()]
     public function user(UserInterface $user): ResponseInterface
@@ -77,14 +78,7 @@ class UserController
         $output = $this->serializer->normalize(
             $user,
             '',
-            ['attributes' => [
-                'realName',
-                'email',
-                'avatar',
-                'admin',
-                'config',
-                'bindings' => ['provider', 'info', 'createdAt']
-            ]]
+            User::getDefaultContext(),
         );
         return new JsonResponse($output);
     }
