@@ -14,12 +14,10 @@ use Zfegg\Admin\Admin\Entity\User;
 use Zfegg\Admin\Admin\Handler\MenuHandler;
 use Zfegg\Admin\Admin\Handler\UserLoginHandler;
 use Zfegg\Admin\Admin\Middleware\AuthorizationMiddleware;
-use Zfegg\Admin\Admin\Remembering\RememberingMe;
 use Zfegg\AttachmentHandler\AttachmentHandler;
 use Zfegg\ApiResourceDoctrine\Extension\QueryFilter\CamelizeNamingStrategy;
 use Zfegg\ApiRestfulHandler\Utils\Route;
 use Zfegg\ContentValidation\ContentValidationMiddleware;
-use Zfegg\DoctrineHelper\Factory\DoctrineRepositoryFactory;
 use Zfegg\PsrMvc\Routing\Group;
 use Zfegg\PsrMvc\Routing\RouteMetadata;
 
@@ -131,14 +129,12 @@ class ConfigProvider
             ],
             'factories' => [
                 Response\ProblemResponseFactory::class => InvokableFactory::class,
-                Repository\Users::class => [DoctrineRepositoryFactory::class, User::class],
                 Controller\RoleUsersResource::class => Controller\RoleUsersResourceFactory::class,
                 Controller\RoleResource::class => Controller\RoleResourceFactory::class,
 //                Controller\UserBindingController::class => Controller\UserBindingControllerFactory::class,
                 Authentication::class => Factory\AuthenticationFactory::class,
                 Handler\MenuHandler::class => Handler\MenuHandlerFactory::class,
                 Authorization\Gate::class => Factory\GateFactory::class,
-                RememberingMe::class => AutowireFactory::class,
             ],
             'aliases' => [
                 Response\ProblemResponseFactoryInterface::class => Response\ProblemResponseFactory::class,
