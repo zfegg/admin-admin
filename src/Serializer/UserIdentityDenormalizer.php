@@ -3,11 +3,11 @@
 namespace Zfegg\Admin\Admin\Serializer;
 
 use Mezzio\Authentication\UserInterface;
-use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
-class UserIdentityDenormalizer implements ContextAwareDenormalizerInterface, DenormalizerAwareInterface
+class UserIdentityDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
 
@@ -26,11 +26,18 @@ class UserIdentityDenormalizer implements ContextAwareDenormalizerInterface, Den
     /**
      * @inheritdoc
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         $data[$context[self::USER_IDENTITY]] = $context[UserInterface::class]->getIdentity();
         unset($context[self::USER_IDENTITY]);
 
         return $this->denormalizer->denormalize($data, $type, $format, $context);
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            'object' => true,
+        ];
     }
 }

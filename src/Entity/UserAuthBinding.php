@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table('admin_user_auth_bindings')]
 #[ORM\UniqueConstraint('openid', ['openid'])]
 #[ORM\Entity()]
-#[ORM\Index(['user_id'], name: 'user_id')]
+#[ORM\Index(name: 'user_id', columns: ['user_id'])]
 class UserAuthBinding
 {
     use UserAwareTrait;

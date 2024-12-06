@@ -6,6 +6,7 @@ namespace Zfegg\Admin\Admin\Authorization;
 use Doctrine\ORM\EntityManagerInterface;
 use Mezzio\Authentication\UserInterface;
 use Zfegg\Admin\Admin\Entity\Role;
+use Zfegg\Admin\Admin\Entity\RoleMenu;
 
 class Gate implements GateInterface
 {
@@ -56,7 +57,7 @@ class Gate implements GateInterface
             return false;
         }
 
-        $q = $em->createQuery('SELECT rm.menu FROM YcAdmin:RoleMenu rm WHERE rm.role=?0');
+        $q = $em->createQuery(sprintf('SELECT rm.menu FROM %s rm WHERE rm.role=?0', RoleMenu::class));
         $q->setParameters([$role]);
 
         $menus = $q->getSingleColumnResult();
@@ -84,11 +85,10 @@ class Gate implements GateInterface
     {
 
         $q = $this->em->createQuery(
-            <<<'DQL'
-SELECT rm.menu FROM YcAdmin:RoleMenu rm 
-JOIN rm.role r 
-WHERE ?0 MEMBER OF r.users
-DQL
+            sprintf(
+                "SELECT rm.menu FROM %s rm JOIN rm.role r WHERE ?0 MEMBER OF r.users",
+                RoleMenu::class
+            )
         );
         $q->setParameters([$userId]);
 

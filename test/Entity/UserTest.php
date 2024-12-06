@@ -22,7 +22,8 @@ class UserTest extends AbstractActionTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Utils::initSession();
+        $adminUser = $this->initTestUser(['email' => 'admin@test.com', 'admin' => true]);
+        $this->initSession($adminUser->getId());
     }
 
     public function testCURD(): void

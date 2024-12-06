@@ -42,7 +42,7 @@ class RoleUsersResource implements ResourceInterface
     /** @inheritdoc  */
     public function get(int|string $id, array $context = []): array|object|null
     {
-        $query = $this->em->createQuery('SELECT u from YcAdmin:User u JOIN u.roles r WHERE r = ?0 and u= ?1');
+        $query = $this->em->createQuery(sprintf('SELECT u from %s u JOIN u.roles r WHERE r = ?0 and u= ?1', User::class));
         $query->setParameters([$context['role_id'], $id]);
         return $query->getOneOrNullResult();
     }

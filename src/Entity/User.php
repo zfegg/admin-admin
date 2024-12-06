@@ -101,7 +101,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="zfegg\Admin\Admin\Entity\UserAuthBinding", mappedBy="user")
      */
-    #[ORM\OneToMany("user", UserAuthBinding::class, cascade: ["persist", "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserAuthBinding::class, mappedBy: "user", cascade: ["persist", "remove"], orphanRemoval: true)]
     private Collection $bindings;
 
 
