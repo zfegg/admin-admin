@@ -49,7 +49,7 @@ class Role
      * @ORM\OneToMany(targetEntity="RoleMenu", mappedBy="role",cascade={"persist", "remove"}, orphanRemoval=true)
      * @var Collection<string>
      */
-    #[ORM\OneToMany("role", RoleMenu::class, ["persist", "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: RoleMenu::class, mappedBy: "role", cascade: ["persist", "remove"], orphanRemoval: true)]
     private Collection $menus;
 
     /**
